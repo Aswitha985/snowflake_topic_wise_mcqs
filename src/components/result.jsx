@@ -1,16 +1,17 @@
-import questions from "../data/questions";
+import questions from "../questions";
 import "../App.css";
 
-function Result({ score, answers }) {
+function Result({ score, answers, topic }) {
+  const filteredQuestions = questions.filter(q => !topic || q.topic === topic);
   return (
     <div className="quiz-container">
-      <h2 className="title">Final Score: {score} / {questions.length}</h2>
+      <h2 className="title">Final Score: {score} / {filteredQuestions.length} {topic ? `(${topic})` : ''}</h2>
 
       <h3 style={{ color: "white", textAlign: "center" }}>
         Answer Review
       </h3>
 
-      {questions.map((q, index) => (
+      {filteredQuestions.map((q, index) => (
         <div className="question-card" key={q.id}>
           <h3>
             {index + 1}. {q.question}
