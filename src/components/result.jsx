@@ -1,8 +1,25 @@
-import questions from "../questions";
+import { useState, useEffect } from "react";
+import { getQuestionsByTopic } from "../services/firebase";
 import "../App.css";
 
 function Result({ score, answers, topic }) {
-  const filteredQuestions = questions.filter(q => !topic || q.topic === topic);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadQuestions = async () => {
+      setLoading(true);
+      const questions = await getQuestionsByTopic(topic);
+      setFilteredQuestions(questions || []);
+      setLoading(false);
+    };
+    if (topic) loadQuestions();
+  }, [topic]);
+
+  if (loading) {
+    return <div className="quiz-container"><h2>Loading results...</h2></div>;
+  }
+
   return (
     <div className="quiz-container">
       <h2 className="title">Final Score: {score} / {filteredQuestions.length} {topic ? `(${topic})` : ''}</h2>

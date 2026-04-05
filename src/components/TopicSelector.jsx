@@ -1,16 +1,33 @@
+import { useState, useEffect } from "react";
+import { getTopics } from "../services/firebase";
 import "../App.css";
 
-const topics = [
-  "Operators",
-  "Functions",
-  "Syntax",
-  "Data Types",
-  "Input/Output",
-  "Data Structures",
-  "Loops"
-];
-
 function TopicSelector({ onSelect }) {
+  const [topics, setTopics] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadTopics = async () => {
+      setLoading(true);
+      const loadedTopics = await getTopics();
+      setTopics(loadedTopics);
+      setLoading(false);
+    };
+    loadTopics();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="topic-selector">
+        <div className="login-wrapper">
+          <div className="topic-card">
+            <h2>Loading topics...</h2>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="topic-selector">
       <div className="login-wrapper">

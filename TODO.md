@@ -1,21 +1,12 @@
-# Color Update Plan for Python Quiz App
+# Firebase Quiz Flow TODO
 
-**Approved Plan Steps:**
-- [x] Step 1: Update src/App.css with new professional color palette
+**Goal: Login → Topics from Firebase → Quiz from Firebase → Result**
 
-- [x] Step 2: Update src/index.css root variables
-
-- [x] Step 3: Test with `npm run dev` and verify new colors
-
-- [x] Step 4: Mark complete
-
-
-**Color Palette:**
-- Primary: #2563EB (Blue)
-- Secondary: #1E40AF
-- Background: #F8FAFC
-- Card: #FFFFFF
-- Text: #111827
-- Accent: #60A5FA
-
-**Plan:** Replace all purple/pink gradients with blue theme, professional shadows, modern spacing.
+- [x] Step 1: Create src/data/ and move src/questions.jsx → src/data/questions.jsx
+- [x] Step 2: Update src/components/quiz.jsx to use Firebase getQuestionsByTopic(topic) exclusively
+- [x] Step 3: Add getTopics() to src/services/firebase.js
+- [x] Step 4: Update src/components/TopicSelector.jsx to fetch topics from Firebase
+- [ ] Step 5: Update firebase.js with mock/working config
+- [x] Step 6: Fix src/components/result.jsx to fetch from Firebase
+- [ ] Step 7: Test full flow with `npm run dev`
+- [ ] Step 8: Complete
