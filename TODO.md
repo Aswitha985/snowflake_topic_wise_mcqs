@@ -1,12 +1,11 @@
-# Firebase Quiz Flow TODO
+# Python Quiz Questions Arrangement Task
 
-**Goal: Login → Topics from Firebase → Quiz from Firebase → Result**
+## Steps to Complete:
+1. [x] Create TODO.md with task steps  
+2. [ ] Update src/services/questions.json with complete 1200+ questions dataset  
+3. [ ] Verify file content and structure  
+4. [ ] Check React app compatibility (if needed)  
+5. [ ] Mark complete and attempt_completion
 
-- [x] Step 1: Create src/data/ and move src/questions.jsx → src/data/questions.jsx
-- [x] Step 2: Update src/components/quiz.jsx to use Firebase getQuestionsByTopic(topic) exclusively
-- [x] Step 3: Add getTopics() to src/services/firebase.js
-- [x] Step 4: Update src/components/TopicSelector.jsx to fetch topics from Firebase
-- [ ] Step 5: Update firebase.js with mock/working config
-- [x] Step 6: Fix src/components/result.jsx to fetch from Firebase
-- [ ] Step 7: Test full flow with `npm run dev`
-- [ ] Step 8: Complete
+**Status:** In progress  
+**Current:** Preparing to update questions.json

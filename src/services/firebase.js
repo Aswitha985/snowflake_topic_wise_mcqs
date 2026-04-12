@@ -2,51 +2,48 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, query, where, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const firebaseConfig = {
-  // TODO: Replace with your config
-  apiKey: "your-api-key",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "your-app-id"
+  apiKey: "AIzaSyDMDqHl-VY0S4QwMvUbLruaI3X7cD_9pQY",
+  authDomain: "snowflake-mcq-app.firebaseapp.com",
+  projectId: "snowflake-mcq-app",
+  storageBucket: "snowflake-mcq-app.firebasestorage.app",
+  messagingSenderId: "108356901848",
+  appId: "1:108356901848:web:75e86b2356d9dbdb7130ad"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-// Get all topics
 export const getTopics = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, "questions"));
     const topicsSet = new Set();
-    querySnapshot.docs.forEach(doc => {
+    querySnapshot.docs.forEach((doc) => {
       topicsSet.add(doc.data().topic);
     });
-    return Array.from(topicsSet);
+    if (topicsSet.size > 0) return Array.from(topicsSet);
   } catch (error) {
     console.error("Error getting topics:", error);
-    return ["Operators", "Functions", "Syntax", "Data Types", "Input/Output", "Data Structures", "Loops"];
   }
+  // Fallback to static topics
+  return ["Python"];
+
 };
 
-  // Get questions by topic
 export const getQuestionsByTopic = async (topic) => {
   try {
-
     let q = query(collection(db, "questions"));
     if (topic) {
       q = query(collection(db, "questions"), where("topic", "==", topic));
     }
     const querySnapshot = await getDocs(q);
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
     console.error("Error getting questions:", error);
     return [];
   }
+
 };
 
-// Add new question
 export const addQuestion = async (questionData) => {
   try {
     questionData.createdAt = serverTimestamp();
@@ -58,4 +55,3 @@ export const addQuestion = async (questionData) => {
     throw error;
   }
 };
-
