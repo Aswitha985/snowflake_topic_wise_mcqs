@@ -147,7 +147,7 @@ body, #root, .app-bg {
 /* Buttons */
 .submit-btn, .topic-btn, .login-card button {
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  color: white;
+  color: red ; /*white;*/
   border: none;
   border-radius: 16px;
   padding: 1.25rem 2.5rem;

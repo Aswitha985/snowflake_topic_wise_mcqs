@@ -28,19 +28,32 @@ function TopicSelector({ onSelect }) {
     );
   }
 
+  if (topics.length === 0) {
+    return (
+      <div className="topic-selector">
+        <div className="login-wrapper">
+          <div className="topic-card">
+            <h2>No topics available</h2>
+            <p>Please check your Firebase collection.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="topic-selector">
       <div className="login-wrapper">
         <div className="topic-card">
-          <h2>Select Python Topic</h2>
+          <h2>Select Quiz Topic</h2>
           <div className="topics-grid">
             {topics.map((topic) => (
-              <button 
-                key={topic}
+              <button
+                key={topic.id}
                 className="topic-btn"
-                onClick={() => onSelect(topic)}
+                onClick={() => onSelect(topic.topic_name)}
               >
-                {topic}
+                {topic.topic_name}
               </button>
             ))}
           </div>

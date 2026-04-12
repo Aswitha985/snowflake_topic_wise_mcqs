@@ -21,10 +21,22 @@ function Quiz({ onSubmit, topic }) {
     setAnswers({ ...answers, [id]: option });
   };
 
+  const getOptions = (q) => {
+    if (Array.isArray(q.options)) {
+      return q.options;
+    }
+    if (q.options && typeof q.options === "object") {
+      return Object.values(q.options);
+    }
+    return [];
+  };
+
   const handleSubmit = () => {
     let score = 0;
     filteredQuestions.forEach((q) => {
-      if (answers[q.id] === q.answer) {
+      const options = getOptions(q);
+      const selectedIndex = options.findIndex((opt) => opt === answers[q.id]);
+      if (selectedIndex >= 0 && selectedIndex.toString() === q.answer) {
         score++;
       }
     });
@@ -34,30 +46,45 @@ function Quiz({ onSubmit, topic }) {
   const optionLabels = ["A", "B", "C", "D"];
 
   if (loading) {
-    return <div className="quiz-container"><h2>Loading questions...</h2></div>;
+    return (
+      <div className="quiz-container">
+        <h2>Loading questions...</h2>
+      </div>
+    );
   }
 
   return (
     <div className="quiz-container">
-      <h2 className="title">{topic ? `${topic} Quiz` : 'Python MCQ Quiz'}</h2>
+      <h2 className="title">
+        {topic ? `${topic} Quiz` : "Snowflake MCQ Quiz"}
+      </h2>
 
-      {filteredQuestions.map((q, index) => (
-        <div className="question-card" key={q.id}>
-          <h3>
-            {index + 1}. {q.question}
-          </h3>
-
-          {q.options.map((opt, i) => (
-            <div
-              key={i}
-              className={`option ${answers[q.id] === opt ? "selected" : ""}`}
-              onClick={() => handleSelect(q.id, opt)}
-            >
-              <span className="label">{optionLabels[i]}.</span> {opt}
-            </div>
-          ))}
+      {filteredQuestions.length === 0 ? (
+        <div className="question-card">
+          <h3>No questions found for this topic.</h3>
         </div>
-      ))}
+      ) : (
+        filteredQuestions.map((q, index) => {
+          const options = getOptions(q);
+          return (
+            <div className="question-card" key={q.id}>
+              <h3>
+                {index + 1}. {q.question}
+              </h3>
+
+              {options.map((opt, i) => (
+                <div
+                  key={i}
+                  className={`option ${answers[q.id] === opt ? "selected" : ""}`}
+                  onClick={() => handleSelect(q.id, opt)}
+                >
+                  <span className="label">{optionLabels[i]}.</span> {opt}
+                </div>
+              ))}
+            </div>
+          );
+        })
+      )}
 
       <button className="submit-btn" onClick={handleSubmit}>
         Submit Quiz

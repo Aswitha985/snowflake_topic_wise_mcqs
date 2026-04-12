@@ -14,9 +14,27 @@ function App() {
   return (
     <div className="app-bg">
       <div className="university-header">
-        <span role="img" aria-label="quiz" style={{marginRight: 12, fontSize: '2.2rem', verticalAlign: 'middle'}}>📝</span>
-        <span style={{fontWeight: 700}}>Python Topic Quiz</span>
-        <span style={{marginLeft: 12, fontSize: '1.5rem', verticalAlign: 'middle'}}>✨</span>
+        <span
+          role="img"
+          aria-label="quiz"
+          style={{
+            marginRight: 12,
+            fontSize: "2.2rem",
+            verticalAlign: "middle",
+          }}
+        >
+          📝
+        </span>
+        <span style={{ fontWeight: 700 }}>Snowflake Topic Wise Question</span>
+        <span
+          style={{
+            marginLeft: 12,
+            fontSize: "1.5rem",
+            verticalAlign: "middle",
+          }}
+        >
+          ✨
+        </span>
       </div>
       {!user ? (
         <Login onLogin={setUser} />

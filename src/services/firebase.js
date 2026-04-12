@@ -1,14 +1,14 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, query, where, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, query, where, addDoc, serverTimestamp, doc } from 'firebase/firestore';
 
 const firebaseConfig = {
-  // TODO: Replace with your config
-  apiKey: "your-api-key",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "your-app-id"
+  apiKey: "AIzaSyDMDqHl-VY0S4QwMvUbLruaI3X7cD_9pQY",
+  authDomain: "snowflake-mcq-app.firebaseapp.com",
+  projectId: "snowflake-mcq-app",
+  storageBucket: "snowflake-mcq-app.firebasestorage.app",
+  messagingSenderId: "108356901848",
+  appId: "1:108356901848:web:75e86b2356d9dbdb7130ad",
+  measurementId: "G-QKCG7EYHCG"
 };
 
 // Initialize Firebase
@@ -18,26 +18,40 @@ export const db = getFirestore(app);
 // Get all topics
 export const getTopics = async () => {
   try {
-    const querySnapshot = await getDocs(collection(db, "questions"));
-    const topicsSet = new Set();
-    querySnapshot.docs.forEach(doc => {
-      topicsSet.add(doc.data().topic);
-    });
-    return Array.from(topicsSet);
+    const querySnapshot = await getDocs(collection(db, "snowflake_topics"));
+    return querySnapshot.docs
+      .map(doc => {
+        const data = doc.data();
+        return data?.topic_name
+          ? { id: doc.id, topic_name: data.topic_name }
+          : null;
+      })
+      .filter(Boolean);
   } catch (error) {
     console.error("Error getting topics:", error);
-    return ["Operators", "Functions", "Syntax", "Data Types", "Input/Output", "Data Structures", "Loops"];
+    return [
+      { id: "1", topic_name: "SnowPipe" },
+      { id: "2", topic_name: "Streams" },
+    ];
   }
 };
 
-  // Get questions by topic
+// Get questions by topic
 export const getQuestionsByTopic = async (topic) => {
   try {
-
-    let q = query(collection(db, "questions"));
-    if (topic) {
-      q = query(collection(db, "questions"), where("topic", "==", topic));
+    if (!topic) {
+      return [];
     }
+
+    const subcollectionMap = {
+      SnowPipe: "snowpipe_topic_questions",
+      Streams: "stream_topic_questions",
+    };
+
+    const subcollectionName = subcollectionMap[topic] || `${topic.toLowerCase().replace(/\s+/g, "")}_topic_questions`;
+    const topicDocRef = doc(db, "questions", topic);
+    const q = collection(topicDocRef, subcollectionName);
+
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
   } catch (error) {
@@ -46,7 +60,7 @@ export const getQuestionsByTopic = async (topic) => {
     if (topic) {
       return localQuestions.filter(q => q.topic === topic);
     }
-return localQuestions;
+    return localQuestions;
   }
 };
 

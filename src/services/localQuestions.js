@@ -56,7 +56,7 @@ const localQuestions = [
   { id: 'io6', question: 'write() for files?', options: ['Read', 'Write', 'Append', 'All'], answer: 'Write', topic: 'Input/Output' },
   { id: 'io7', question: 'with open() context?', options: ['Auto close', 'Manual close', 'Error', 'Optional'], answer: 'Auto close', topic: 'Input/Output' },
   { id: 'io8', question: 'sep in print()?', options: ['Space default', 'Comma', 'Newline', 'Tab'], answer: 'Space default', topic: 'Input/Output' },
-  { id: 'io9', question: 'end=\\'' in print?', options: ['No newline', 'Newline', 'Space', 'Tab'], answer: 'No newline', topic: 'Input/Output' },
+  //{ id: 'io9', question: 'end=\\'' in print?', options: ['No newline', 'Newline', 'Space', 'Tab'], answer: 'No newline', topic: 'Input/Output' },
   { id: 'io10', question: 'int(input()) does?', options: ['Convert to int', 'String', 'Float', 'Error if not num'], answer: 'Convert to int', topic: 'Input/Output' },
 
   // Data Structures
